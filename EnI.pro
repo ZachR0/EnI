@@ -42,7 +42,8 @@ SOURCES += \
     Rendering.cpp \
     main.cpp \
     Lua.cpp \
-    Events.cpp
+    Events.cpp \
+    Sprites.cpp
 
 OTHER_FILES += \
     SDLMain.m
@@ -56,4 +57,5 @@ HEADERS += \
     Lua.h \
     Global.h \
     Events.h \
-    Config.h
+    Config.h \
+    Sprites.h
