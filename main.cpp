@@ -16,6 +16,10 @@ string GRAPHICS_LIB;
 
 int main(int argc, char *argv[])
 {
+    //Display startup message
+    cout << "EnI - Zach Rogers <zachrog@gmail.com> - Early Development Stages" << endl;
+    cout << "----------------------------------------------------------------" << endl;
+
     //Get startup args to find out what game to load
     string Args = "";
     for(int i = 0; i < argc; i++)
