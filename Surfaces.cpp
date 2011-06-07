@@ -68,7 +68,7 @@ namespace SDL
             //Free the SDL Surface
             SDL_FreeSurface(Current_Surfaces.at(index));
 
-            //Remove the element from the vector
+            //Remove the element from the vector(dynamic array)
             Current_Surfaces.erase(Current_Surfaces.begin() + index);
 
             //Adjust our index
