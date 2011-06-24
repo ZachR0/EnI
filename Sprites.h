@@ -16,10 +16,6 @@ namespace SDL
     //Sprite Manager Namespace
     namespace SpriteManager
     {
-        //Dynamic Array of all Sprite objects
-        extern std::vector<SDL_Surface*> Current_Sprites;
-        extern int Current_Sprites_Index; //Active index of Sprite objects
-
         //Sprite Class
         class Sprite
         {
@@ -33,11 +29,14 @@ namespace SDL
             int MAX_FRAME; //Max frame in animation
             int Current_Frame; //Current frame in animation
             string Current_Direction; //Current direction for the animation to loop through (down, right, up, left)
-            int UpFrames[]; //Array of all the frames that are accociated with the Up direction animation
-            int DownFrames[]; //Array of all the frames that are accociated with the Down direction animation
-            int LeftFrames[]; //Array of all the frames that are accociated with the Left direction animation
-            int RightFrames[]; //Array of all the frames that are accociated with the Right direction animation
+            int *UpFrames; //Array of all the frames that are accociated with the Up direction animation
+            int *DownFrames; //Array of all the frames that are accociated with the Down direction animation
+            int *LeftFrames; //Array of all the frames that are accociated with the Left direction animation
+            int *RightFrames; //Array of all the frames that are accociated with the Right direction animation
             SDL_Surface *Frames[]; //Frame Surface array
+
+            int sprite_index; //Index value for Current_Sprites
+
 
         public:
             //Init - Loads SpriteSheet into memory accordingly, based on SpriteMap
@@ -64,6 +63,19 @@ namespace SDL
             //Returns a specific frame as an SDL_Surface
             SDL_Surface *GetFrameSurface(int Frame);
 
+            //Gets the index
+            int GetIndex();
+
+            //Sets the index
+            void SetIndex(int index);
+
         };
+
+        //Dynamic Array of all Sprite objects
+        extern std::vector<Sprite*> Current_Sprites;
+        extern int Current_Sprites_Index; //Active index of Sprite objects
+
+       //Destroys an element
+       void Destroy(int index);
     }
 }

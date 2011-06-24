@@ -5,6 +5,7 @@
 #include "Surfaces.h"
 #include "Config.h"
 #include "TTF.h"
+#include "Sprites.h"
 
 //Lua Interpreter Namespace
 namespace LuaInterp
@@ -34,8 +35,7 @@ namespace LuaInterp
             lua_register(Interpreter, "SurfDestroy", LuaFunctions::SurfaceManagement_Destroy);
             lua_register(Interpreter, "Load_TTF", LuaFunctions::LoadTTF);
             lua_register(Interpreter, "TTFDestroy", LuaFunctions::TTFManagement_Destroy);
-
-            cout << GAMELOC << endl;
+            lua_register(Interpreter, "Sprite", LuaFunctions::SpriteManager_Init);
 
         }
         catch(...)
@@ -359,10 +359,20 @@ namespace LuaFunctions
     //Destroys an instance of a Surface in the SurfaceManagement System
     static int SurfaceManagement_Destroy(lua_State *L)
     {
-        //Get parameters
-        int index = lua_tonumber(LuaInterp::Interpreter, 1);
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get parameters
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
 
-        SDL::SurfaceManagement::Destroy(index);
+            SDL::SurfaceManagement::Destroy(index);
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua function SurfDestroy()" << endl;
+        }
     }
 
     //Loads a TTF into the TTFManagement System
@@ -421,9 +431,61 @@ namespace LuaFunctions
     //Destroys an instance of a TTF_Font in the TTFManagement System
     static int TTFManagement_Destroy(lua_State *L)
     {
-        //Get parameters
-        int index = lua_tonumber(LuaInterp::Interpreter, 1);
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get parameters
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
 
-        SDL::TTFManagement::Destroy(index);
+            SDL::TTFManagement::Destroy(index);
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua function TTFDestroy()" << endl;
+        }
+    }
+
+    //Initalizes a new Sprite object for the SpriteManager
+    static int SpriteManager_Init(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get parameters
+            string SpriteSheet = lua_tostring(LuaInterp::Interpreter, 1);
+            string SpriteMap = lua_tostring(LuaInterp::Interpreter, 2);
+
+
+            //Init our Sprite
+            SDL::SpriteManager::Sprite tmpSprite = SDL::SpriteManager::Sprite(SpriteSheet, SpriteMap);
+
+            //Resize our dynamic array (vector)
+            SDL::SpriteManager::Current_Sprites.resize(SDL::SpriteManager::Current_Sprites.size() + 1); //Buffer an extra element
+
+            //Set Index that this sprite obj is located at in Current_Sprites array
+            tmpSprite.SetIndex(SDL::SpriteManager::Current_Sprites_Index);
+
+            //Load our sprite obj
+            SDL::SpriteManager::Current_Sprites.at(SDL::SpriteManager::Current_Sprites_Index) = &tmpSprite;
+
+            //Incrase Index
+            SDL::SpriteManager::Current_Sprites_Index++;
+
+            //Get the Sprite index
+            int index = tmpSprite.GetIndex();
+
+            //Return the index
+            lua_pushnumber(L, index);
+
+            return 1;
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL current is not supported for the Lua Function Sprite()" << endl;
+        }
     }
 }

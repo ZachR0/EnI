@@ -77,4 +77,7 @@ namespace LuaFunctions
 
     //Destroys an instance of a TTF_Font in the TTFManagement System
     static int TTFManagement_Destroy(lua_State *L);
+
+    //Initalizes a new Sprite object for the SpriteManager
+    static int SpriteManager_Init(lua_State *L);
 }
