@@ -57,6 +57,17 @@ namespace SDL
             return true;
         }
 
+        //Returns a subimage (clipped area) of another SDL_Surface as a SDL_Surface
+        SDL_Surface *GetSubImage(SDL_Surface *surf, SDL_Rect* clip)
+        {
+            SDL_Surface *sub = SDL_CreateRGBSurface(SDL_SWSURFACE, clip->w, clip->h, 32, 0, 0, 0, 0);
+            if ((RenderSurface(surf, sub, 0, 0, clip)) == true)
+            {
+                return sub;
+            }
+            return NULL;
+        }
+
         //Geneterates Text to an SDL_Surface
         SDL_Surface *GenerateText(string Text, SDL_Color ForegroundColor, TTF_Font *Font)
         {

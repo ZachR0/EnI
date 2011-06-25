@@ -1,5 +1,6 @@
 #include "Sprites.h"
 #include "Config.h"
+#include "Rendering.h"
 
 //SDL Namespace
 namespace SDL
@@ -14,11 +15,6 @@ namespace SDL
         //Init - Loads SpriteSheet into memory accordingly, based on SpriteMap
         Sprite::Sprite(string SpriteSheet, string SpriteMap)
         {
-            //Load SpriteMap File
-            string FileLoc = GAMELOC + "/";
-            FileLoc += SpriteMap;
-            ifstream File (FileLoc.c_str());
-
             //Animation Stuff
             int Min_Frame_Up = -1;
             int Max_Frame_Up = 0;
@@ -31,6 +27,16 @@ namespace SDL
 
             int Min_Frame_Left = -1;
             int Max_Frame_Left = 0;
+
+            //Load Sprite Sheet into memory
+            string FileLoc = GAMELOC + "/";
+            FileLoc += SpriteSheet;
+            SDL_Surface *SpriteSheet_Surf = SDL::Rendering::Load_Image(FileLoc);
+
+            //Load SpriteMap File
+            FileLoc = GAMELOC + "/";
+            FileLoc += SpriteMap;
+            ifstream File (FileLoc.c_str());
 
             //Make sure we can open the sprite map file
             if (File.is_open())
@@ -134,6 +140,19 @@ namespace SDL
                             Max_Frame_Left += 1;
                         }
 
+                        //Setup SDL_Rect for SubImage clipping of spritesheet
+                        SDL_Rect ClipRect;
+                        ClipRect.x = atoi(OffX.c_str());
+                        ClipRect.y = atoi(OffY.c_str());;
+                        ClipRect.w = atoi(Width.c_str());;
+                        ClipRect.h = atoi(Height.c_str());;
+
+                        //Resize our dynamic array
+                        this->Frames.resize(this->Frames.size() + 1); //Resize (allow for an extra element)
+
+                        //Load the sprite into memory
+                        this->Frames.at(count) = SDL::Rendering::GetSubImage(SpriteSheet_Surf, &ClipRect);
+
                         //Increase loop count
                         count += 1;
                     }
@@ -200,8 +219,6 @@ namespace SDL
                     this->LeftFrames[index] = i;
                     index++;
                 }
-
-                //TODO: Add code that will actually load each frame subimage into memory -- SDL_Surface* galore! xD
               }
 
               else

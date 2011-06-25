@@ -33,7 +33,7 @@ namespace SDL
             int *DownFrames; //Array of all the frames that are accociated with the Down direction animation
             int *LeftFrames; //Array of all the frames that are accociated with the Left direction animation
             int *RightFrames; //Array of all the frames that are accociated with the Right direction animation
-            SDL_Surface *Frames[]; //Frame Surface array
+            std::vector<SDL_Surface*> Frames; //Frame Surface array
 
             int sprite_index; //Index value for Current_Sprites
 
