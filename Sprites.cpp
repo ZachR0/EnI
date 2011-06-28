@@ -210,27 +210,28 @@ namespace SDL
 
                 //Pass each directional frame assignement value to the frame animation arrays
                 int index = 0;
-                for(int i = Min_Frame_Down; i < Max_Frame_Down; i++)
+                for(int i = Min_Frame_Down; i <= Max_Frame_Down; i++)
                 {
                     this->DownFrames[index] = i;
+                    index++;
                 }
 
                 index = 0;
-                for(int i = Min_Frame_Up; i < Max_Frame_Up; i++)
+                for(int i = Min_Frame_Up; i <= Max_Frame_Up; i++)
                 {
                     this->UpFrames[index] = i;
                     index++;
                 }
 
                 index = 0;
-                for(int i = Min_Frame_Right; i < Max_Frame_Right; i++)
+                for(int i = Min_Frame_Right; i <= Max_Frame_Right; i++)
                 {
                     this->RightFrames[index] = i;
                     index++;
                 }
 
                 index = 0;
-                for(int i = Min_Frame_Left; i < Max_Frame_Left; i++)
+                for(int i = Min_Frame_Left; i <= Max_Frame_Left; i++)
                 {
                     this->LeftFrames[index] = i;
                     index++;
@@ -247,7 +248,6 @@ namespace SDL
         //Renders the Currect Frame
         void Sprite::Render(int x, int y)
         {
-            cout << this->Current_Frame << endl;
             SDL::Rendering::RenderSurface(this->Frames.at(this->Current_Frame), SDL_GetVideoSurface(), x, y, NULL);
         }
 
@@ -269,19 +269,21 @@ namespace SDL
                 }
 
                 //Make sure the Animation Index is within its max bounds
-                if(this->Animation_Index > (sizeof(this->UpFrames) / sizeof(int)))
+                if(this->Animation_Index < (sizeof(this->UpFrames) / sizeof(int)))
+                {
+                    //Set Current Frame
+                    this->Current_Frame = this->UpFrames[this->Animation_Index];
+
+                    //Update Animation Index
+                    this->Animation_Index++;
+                }
+                else
                 {
                     this->Animation_Index = 0;
                 }
-
-                //Set Current Frame
-                this->Current_Frame = this->UpFrames[this->Animation_Index];
-
-                //Update Animation Index
-                this->Animation_Index++;
             }
 
-            if (this->Current_Direction == DOWN_DIRECTION)
+            else if (this->Current_Direction == DOWN_DIRECTION)
             {
                 //Check Animation Index
                 if(this->Animation_Index == -1)
@@ -290,19 +292,21 @@ namespace SDL
                 }
 
                 //Make sure the Animation Index is within its max bounds
-                if(this->Animation_Index > (sizeof(this->DownFrames) / sizeof(int)))
+                if(this->Animation_Index < (sizeof(this->DownFrames) / sizeof(int)))
+                {
+                    //Set Current Frame
+                    this->Current_Frame = this->DownFrames[this->Animation_Index];
+
+                    //Update Animation Index
+                    this->Animation_Index++;
+                }
+                else
                 {
                     this->Animation_Index = 0;
                 }
-
-                //Set Current Frame
-                this->Current_Frame = this->DownFrames[this->Animation_Index];
-
-                //Update Animation Index
-                this->Animation_Index++;
             }
 
-            if (this->Current_Direction == LEFT_DIRECTION)
+            else if (this->Current_Direction == LEFT_DIRECTION)
             {
                 //Check Animation Index
                 if(this->Animation_Index == -1)
@@ -311,19 +315,21 @@ namespace SDL
                 }
 
                 //Make sure the Animation Index is within its max bounds
-                if(this->Animation_Index > (sizeof(this->LeftFrames) / sizeof(int)))
+                if(this->Animation_Index < (sizeof(this->LeftFrames) / sizeof(int)))
+                {
+                    //Set Current Frame
+                    this->Current_Frame = this->LeftFrames[this->Animation_Index];
+
+                    //Update Animation Index
+                    this->Animation_Index++;
+                }
+                else
                 {
                     this->Animation_Index = 0;
                 }
-
-                //Set Current Frame
-                this->Current_Frame = this->LeftFrames[this->Animation_Index];
-
-                //Update Animation Index
-                this->Animation_Index++;
             }
 
-            if (this->Current_Direction == RIGHT_DIRECTION)
+            else if (this->Current_Direction == RIGHT_DIRECTION)
             {
                 //Check Animation Index
                 if(this->Animation_Index == -1)
@@ -332,20 +338,22 @@ namespace SDL
                 }
 
                 //Make sure the Animation Index is within its max bounds
-                if(this->Animation_Index > (sizeof(this->RightFrames) / sizeof(int)))
+                if(this->Animation_Index < (sizeof(this->RightFrames) / sizeof(int)))
+                {
+                    //Set Current Frame
+                    this->Current_Frame = this->RightFrames[this->Animation_Index];
+
+                    //Update Animation Index
+                    this->Animation_Index++;
+                }
+                else
                 {
                     this->Animation_Index = 0;
                 }
 
-                //Set Current Frame
-                this->Current_Frame = this->RightFrames[this->Animation_Index];
-
-                //Update Animation Index
-                this->Animation_Index++;
-
             }
 
-            if (this->Current_Direction == UNK_DIRECTION)
+            else
             {
                 this->Animation_Index = -1;
                 this->Current_Direction = DOWN_DIRECTION;
