@@ -80,4 +80,13 @@ namespace LuaFunctions
 
     //Initalizes a new Sprite object for the SpriteManager
     static int SpriteManager_Init(lua_State *L);
+
+    //Animates a Sprite object from the SpriteManager
+    static int SpriteManager_Animation(lua_State *L);
+
+    //Renders a Sprite object from the SpriteManager
+    static int SpriteManager_Render(lua_State *L);
+
+    //Sets the direction for Animation for a Sprite object from the SpriteManager
+    static int SpriteManager_SetDirection(lua_State *L);
 }

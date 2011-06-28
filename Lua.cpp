@@ -36,6 +36,9 @@ namespace LuaInterp
             lua_register(Interpreter, "Load_TTF", LuaFunctions::LoadTTF);
             lua_register(Interpreter, "TTFDestroy", LuaFunctions::TTFManagement_Destroy);
             lua_register(Interpreter, "Sprite", LuaFunctions::SpriteManager_Init);
+            lua_register(Interpreter, "Sprite_Animate", LuaFunctions::SpriteManager_Animation);
+            lua_register(Interpreter, "Sprite_Render", LuaFunctions::SpriteManager_Render);
+            lua_register(Interpreter, "Sprite_SetDirection", LuaFunctions::SpriteManager_SetDirection);
 
         }
         catch(...)
@@ -468,7 +471,7 @@ namespace LuaFunctions
             tmpSprite.SetIndex(SDL::SpriteManager::Current_Sprites_Index);
 
             //Load our sprite obj
-            SDL::SpriteManager::Current_Sprites.at(SDL::SpriteManager::Current_Sprites_Index) = &tmpSprite;
+            SDL::SpriteManager::Current_Sprites.at(SDL::SpriteManager::Current_Sprites_Index) = tmpSprite;
 
             //Incrase Index
             SDL::SpriteManager::Current_Sprites_Index++;
@@ -485,7 +488,123 @@ namespace LuaFunctions
         //OpenGL
         else if(GRAPHICS_LIB == "OpenGL")
         {
-            cout << "[EnI]: OpenGL current is not supported for the Lua Function Sprite()" << endl;
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Sprite()" << endl;
         }
+    }
+
+    //Animates a Sprite object from the SpriteManager
+    static int SpriteManager_Animation(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get Sprite ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Call Animate function
+            try
+            {
+                SDL::SpriteManager::Current_Sprites.at(index).Animate();
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Sprite_Animate function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Sprite_Animate()" << endl;
+        }
+
+        return 0;
+
+    }
+
+    //Renders a Sprite object from the SpriteManager
+    static int SpriteManager_Render(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get Sprite ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Get Render X,Y
+            int x = lua_tonumber(LuaInterp::Interpreter, 2);
+            int y = lua_tonumber(LuaInterp::Interpreter, 3);
+
+            //Call Render function
+            try
+            {
+                SDL::SpriteManager::Current_Sprites.at(index).Render(x, y);
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Sprite_Render function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Sprite_Render()" << endl;
+        }
+
+        return 0;
+
+    }
+
+    //Sets the direction for Animation for a Sprite object from the SpriteManager
+    static int SpriteManager_SetDirection(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get Sprite ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Get Direction
+            string direction = lua_tostring(LuaInterp::Interpreter, 2);
+            int new_direction = UNK_DIRECTION;
+
+            //Convert direction to something the SetDirection function will understand
+            if (direction == "up")
+            {
+                new_direction = UP_DIRECTION;
+            }
+            else if (direction == "down")
+            {
+                new_direction = DOWN_DIRECTION;
+            }
+            else if (direction == "left")
+            {
+                new_direction = LEFT_DIRECTION;
+            }
+            else if (direction == "right")
+            {
+                new_direction = RIGHT_DIRECTION;
+            }
+
+            //Call Set Direction function
+            try
+            {
+                SDL::SpriteManager::Current_Sprites.at(index).SetDirection(new_direction);
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Sprite_SetDirection function for obj " << index <<  " - Valid directions up, down, left, right" << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Sprite_SetDirection()" << endl;
+        }
+
+        return 0;
+
     }
 }

@@ -9,12 +9,23 @@ namespace SDL
     namespace SpriteManager
     {
         //From Sprites.h
-        std::vector<Sprite*> Current_Sprites(1);
+        std::vector<Sprite> Current_Sprites(1);
         int Current_Sprites_Index = 1; //Active index of Sprite objects
+
+        Sprite::Sprite()
+        {
+            //Do Nothing..
+        }
 
         //Init - Loads SpriteSheet into memory accordingly, based on SpriteMap
         Sprite::Sprite(string SpriteSheet, string SpriteMap)
         {
+            //Set Variable Defaults
+            this->Current_Direction = DOWN_DIRECTION;
+            this->Current_Frame = 0;
+            this->isAnimating = true; //Enable animation by default
+            this->Animation_Index = -1;
+
             //Animation Stuff
             int Min_Frame_Up = -1;
             int Max_Frame_Up = 0;
@@ -32,11 +43,13 @@ namespace SDL
             string FileLoc = GAMELOC + "/";
             FileLoc += SpriteSheet;
             SDL_Surface *SpriteSheet_Surf = SDL::Rendering::Load_Image(FileLoc);
+            this->SpriteSheet_Loc = FileLoc;
 
             //Load SpriteMap File
             FileLoc = GAMELOC + "/";
             FileLoc += SpriteMap;
             ifstream File (FileLoc.c_str());
+            this->SpriteMap_Loc = FileLoc;
 
             //Make sure we can open the sprite map file
             if (File.is_open())
@@ -186,6 +199,9 @@ namespace SDL
                 int Total_Frames_Right = (Max_Frame_Right - Min_Frame_Right) + 1;
                 int Total_Frames_Left = (Max_Frame_Left - Min_Frame_Left) + 1;
 
+                //Set MAX_FRAME
+                this->MAX_FRAME = (Total_Frames_Down + Total_Frames_Up + Total_Frames_Right + Total_Frames_Left);
+
                 //Resize frame animation arrays
                 this->DownFrames = new int[Total_Frames_Down]();
                 this->UpFrames = new int[Total_Frames_Up]();
@@ -229,45 +245,153 @@ namespace SDL
         }
 
         //Renders the Currect Frame
-        void Sprite::Render()
+        void Sprite::Render(int x, int y)
         {
-
+            cout << this->Current_Frame << endl;
+            SDL::Rendering::RenderSurface(this->Frames.at(this->Current_Frame), SDL_GetVideoSurface(), x, y, NULL);
         }
 
         //Renders a specific frame
-        void Sprite::Render(int Frame)
+        void Sprite::Render(int x, int y, int Frame)
         {
-
+            SDL::Rendering::RenderSurface(this->Frames.at(Frame), SDL_GetVideoSurface(), x, y, NULL);
         }
 
         //Animates - Handles the CurrentFrame
         void Sprite::Animate()
         {
+            if (this->Current_Direction == UP_DIRECTION)
+            {
+                //Check Animation Index
+                if(this->Animation_Index == -1)
+                {
+                    this->Animation_Index = 0;
+                }
+
+                //Make sure the Animation Index is within its max bounds
+                if(this->Animation_Index > (sizeof(this->UpFrames) / sizeof(int)))
+                {
+                    this->Animation_Index = 0;
+                }
+
+                //Set Current Frame
+                this->Current_Frame = this->UpFrames[this->Animation_Index];
+
+                //Update Animation Index
+                this->Animation_Index++;
+            }
+
+            if (this->Current_Direction == DOWN_DIRECTION)
+            {
+                //Check Animation Index
+                if(this->Animation_Index == -1)
+                {
+                    this->Animation_Index = 0;
+                }
+
+                //Make sure the Animation Index is within its max bounds
+                if(this->Animation_Index > (sizeof(this->DownFrames) / sizeof(int)))
+                {
+                    this->Animation_Index = 0;
+                }
+
+                //Set Current Frame
+                this->Current_Frame = this->DownFrames[this->Animation_Index];
+
+                //Update Animation Index
+                this->Animation_Index++;
+            }
+
+            if (this->Current_Direction == LEFT_DIRECTION)
+            {
+                //Check Animation Index
+                if(this->Animation_Index == -1)
+                {
+                    this->Animation_Index = 0;
+                }
+
+                //Make sure the Animation Index is within its max bounds
+                if(this->Animation_Index > (sizeof(this->LeftFrames) / sizeof(int)))
+                {
+                    this->Animation_Index = 0;
+                }
+
+                //Set Current Frame
+                this->Current_Frame = this->LeftFrames[this->Animation_Index];
+
+                //Update Animation Index
+                this->Animation_Index++;
+            }
+
+            if (this->Current_Direction == RIGHT_DIRECTION)
+            {
+                //Check Animation Index
+                if(this->Animation_Index == -1)
+                {
+                    this->Animation_Index = 0;
+                }
+
+                //Make sure the Animation Index is within its max bounds
+                if(this->Animation_Index > (sizeof(this->RightFrames) / sizeof(int)))
+                {
+                    this->Animation_Index = 0;
+                }
+
+                //Set Current Frame
+                this->Current_Frame = this->RightFrames[this->Animation_Index];
+
+                //Update Animation Index
+                this->Animation_Index++;
+
+            }
+
+            if (this->Current_Direction == UNK_DIRECTION)
+            {
+                this->Animation_Index = -1;
+                this->Current_Direction = DOWN_DIRECTION;
+            }
+        }
+
+        //Gets the current direction
+        int Sprite::GetDirection()
+        {
+            return this->Current_Direction;
+        }
+
+        //Sets the current direction
+        void Sprite::SetDirection(int NewDirection)
+        {
+            //Make sure NewDirection is valid
+            if ((NewDirection == UP_DIRECTION) || (NewDirection == DOWN_DIRECTION) || (NewDirection == LEFT_DIRECTION) || (NewDirection == RIGHT_DIRECTION))
+            {
+                this->Current_Direction = NewDirection;
+                this->Animation_Index = -1; //Reset Animation Index
+            }
 
         }
 
         //Get the current frame
         int Sprite::GetFrame()
         {
-
+            return this->Current_Frame;
         }
 
         //Sets the current frame
-        void Sprite::SetFrame()
+        void Sprite::SetFrame(int NewFrame)
         {
-
+            this->Current_Frame = NewFrame;
         }
 
         //Get the maximum number of frames
         int Sprite::GetMaxFrames()
         {
-
+            return this->MAX_FRAME;
         }
 
         //Returns a specific frame as an SDL_Surface
         SDL_Surface *Sprite::GetFrameSurface(int Frame)
         {
-
+            return this->Frames.at(Frame);
         }
 
         //Sets the index
