@@ -60,6 +60,9 @@ namespace SDL
             //Animates - Handles the CurrentFrame
             void Animate();
 
+            //Sets Animation - Enables/Disables
+            void SetAnimate(bool status);
+
             //Gets the current direction
             int GetDirection();
 
@@ -92,5 +95,6 @@ namespace SDL
 
        //Destroys an element
        void Destroy(int index);
+
     }
 }

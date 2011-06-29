@@ -260,104 +260,114 @@ namespace SDL
         //Animates - Handles the CurrentFrame
         void Sprite::Animate()
         {
-            if (this->Current_Direction == UP_DIRECTION)
+            //Is Animation Enabled?
+            if(this->isAnimating == true)
             {
-                //Check Animation Index
-                if(this->Animation_Index == -1)
+                if (this->Current_Direction == UP_DIRECTION)
                 {
-                    this->Animation_Index = 0;
+                    //Check Animation Index
+                    if(this->Animation_Index == -1)
+                    {
+                        this->Animation_Index = 0;
+                    }
+
+                    //Make sure the Animation Index is within its max bounds
+                    if(this->Animation_Index < (sizeof(this->UpFrames) / sizeof(int)))
+                    {
+                        //Set Current Frame
+                        this->Current_Frame = this->UpFrames[this->Animation_Index];
+
+                        //Update Animation Index
+                        this->Animation_Index++;
+                    }
+                    else
+                    {
+                        this->Animation_Index = 0;
+                    }
                 }
 
-                //Make sure the Animation Index is within its max bounds
-                if(this->Animation_Index < (sizeof(this->UpFrames) / sizeof(int)))
+                else if (this->Current_Direction == DOWN_DIRECTION)
                 {
-                    //Set Current Frame
-                    this->Current_Frame = this->UpFrames[this->Animation_Index];
+                    //Check Animation Index
+                    if(this->Animation_Index == -1)
+                    {
+                        this->Animation_Index = 0;
+                    }
 
-                    //Update Animation Index
-                    this->Animation_Index++;
+                    //Make sure the Animation Index is within its max bounds
+                    if(this->Animation_Index < (sizeof(this->DownFrames) / sizeof(int)))
+                    {
+                        //Set Current Frame
+                        this->Current_Frame = this->DownFrames[this->Animation_Index];
+
+                        //Update Animation Index
+                        this->Animation_Index++;
+                    }
+                    else
+                    {
+                        this->Animation_Index = 0;
+                    }
                 }
+
+                else if (this->Current_Direction == LEFT_DIRECTION)
+                {
+                    //Check Animation Index
+                    if(this->Animation_Index == -1)
+                    {
+                        this->Animation_Index = 0;
+                    }
+
+                    //Make sure the Animation Index is within its max bounds
+                    if(this->Animation_Index < (sizeof(this->LeftFrames) / sizeof(int)))
+                    {
+                        //Set Current Frame
+                        this->Current_Frame = this->LeftFrames[this->Animation_Index];
+
+                        //Update Animation Index
+                        this->Animation_Index++;
+                    }
+                    else
+                    {
+                        this->Animation_Index = 0;
+                    }
+                }
+
+                else if (this->Current_Direction == RIGHT_DIRECTION)
+                {
+                    //Check Animation Index
+                    if(this->Animation_Index == -1)
+                    {
+                        this->Animation_Index = 0;
+                    }
+
+                    //Make sure the Animation Index is within its max bounds
+                    if(this->Animation_Index < (sizeof(this->RightFrames) / sizeof(int)))
+                    {
+                        //Set Current Frame
+                        this->Current_Frame = this->RightFrames[this->Animation_Index];
+
+                        //Update Animation Index
+                        this->Animation_Index++;
+                    }
+                    else
+                    {
+                        this->Animation_Index = 0;
+                    }
+
+                }
+
                 else
                 {
-                    this->Animation_Index = 0;
+                    this->Animation_Index = -1;
+                    this->Current_Direction = DOWN_DIRECTION;
                 }
             }
+        }
 
-            else if (this->Current_Direction == DOWN_DIRECTION)
-            {
-                //Check Animation Index
-                if(this->Animation_Index == -1)
-                {
-                    this->Animation_Index = 0;
-                }
-
-                //Make sure the Animation Index is within its max bounds
-                if(this->Animation_Index < (sizeof(this->DownFrames) / sizeof(int)))
-                {
-                    //Set Current Frame
-                    this->Current_Frame = this->DownFrames[this->Animation_Index];
-
-                    //Update Animation Index
-                    this->Animation_Index++;
-                }
-                else
-                {
-                    this->Animation_Index = 0;
-                }
-            }
-
-            else if (this->Current_Direction == LEFT_DIRECTION)
-            {
-                //Check Animation Index
-                if(this->Animation_Index == -1)
-                {
-                    this->Animation_Index = 0;
-                }
-
-                //Make sure the Animation Index is within its max bounds
-                if(this->Animation_Index < (sizeof(this->LeftFrames) / sizeof(int)))
-                {
-                    //Set Current Frame
-                    this->Current_Frame = this->LeftFrames[this->Animation_Index];
-
-                    //Update Animation Index
-                    this->Animation_Index++;
-                }
-                else
-                {
-                    this->Animation_Index = 0;
-                }
-            }
-
-            else if (this->Current_Direction == RIGHT_DIRECTION)
-            {
-                //Check Animation Index
-                if(this->Animation_Index == -1)
-                {
-                    this->Animation_Index = 0;
-                }
-
-                //Make sure the Animation Index is within its max bounds
-                if(this->Animation_Index < (sizeof(this->RightFrames) / sizeof(int)))
-                {
-                    //Set Current Frame
-                    this->Current_Frame = this->RightFrames[this->Animation_Index];
-
-                    //Update Animation Index
-                    this->Animation_Index++;
-                }
-                else
-                {
-                    this->Animation_Index = 0;
-                }
-
-            }
-
-            else
-            {
-                this->Animation_Index = -1;
-                this->Current_Direction = DOWN_DIRECTION;
-            }
+        //Sets Animation - Enables/Disables
+        void Sprite::SetAnimate(bool status)
+        {
+            this->isAnimating = status;
         }
 
         //Gets the current direction
@@ -373,7 +383,6 @@ namespace SDL
             if ((NewDirection == UP_DIRECTION) || (NewDirection == DOWN_DIRECTION) || (NewDirection == LEFT_DIRECTION) || (NewDirection == RIGHT_DIRECTION))
             {
                 this->Current_Direction = NewDirection;
-                this->Animation_Index = -1; //Reset Animation Index
             }
 
         }

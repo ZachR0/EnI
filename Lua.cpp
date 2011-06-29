@@ -6,6 +6,7 @@
 #include "Config.h"
 #include "TTF.h"
 #include "Sprites.h"
+#include "FPS.h"
 
 //Lua Interpreter Namespace
 namespace LuaInterp
@@ -39,6 +40,10 @@ namespace LuaInterp
             lua_register(Interpreter, "Sprite_Animate", LuaFunctions::SpriteManager_Animation);
             lua_register(Interpreter, "Sprite_Render", LuaFunctions::SpriteManager_Render);
             lua_register(Interpreter, "Sprite_SetDirection", LuaFunctions::SpriteManager_SetDirection);
+            lua_register(Interpreter, "Sprite_AnimateEnable", LuaFunctions::SpriteManager_AnimationEnable);
+            lua_register(Interpreter, "Sprite_AnimateDisable", LuaFunctions::SpriteManager_AnimationDisable);
+            lua_register(Interpreter, "FPS_Check", LuaFunctions::FPS_Check);
+            lua_register(Interpreter, "FPS_Set", LuaFunctions::FPS_Set);
 
         }
         catch(...)
@@ -605,6 +610,105 @@ namespace LuaFunctions
         }
 
         return 0;
+    }
 
+    //Enables Sprite Animation
+    static int SpriteManager_AnimationEnable(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get Sprite ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Enable Animation
+            try
+            {
+                SDL::SpriteManager::Current_Sprites.at(index).SetAnimate(true);
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Sprite_AnimateEnable function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Sprite_AnimateEnable()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Disables Sprite Animation
+    static int SpriteManager_AnimationDisable(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get Sprite ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Disable Animation
+            try
+            {
+                SDL::SpriteManager::Current_Sprites.at(index).SetAnimate(false);
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Sprite_AnimateDisable function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Sprite_AnimateDisable()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Checks FPS and delays if needed
+    static int FPS_Check(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Check and delay if needed
+            SDL::FPS::Check();
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function FPS_Check()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Sets FPS
+    static int FPS_Set(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get new FPS
+            int fps = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //ReInit the FPS system
+            SDL::FPS::Init(fps);
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function FPS_Set()" << endl;
+        }
+
+        return 0;
     }
 }

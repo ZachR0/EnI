@@ -1,5 +1,6 @@
 #include "Video.h"
 #include "Surfaces.h"
+#include "FPS.h"
 
 //SDL Namespace
 namespace SDL
@@ -15,6 +16,9 @@ namespace SDL
 
         //Make sure the screen setup went well
         if (Screen == NULL) return false;
+
+        //Initialize FPS System
+        SDL::FPS::Init(20);
 
         //Initialize SDL_ttf
         if(TTF_Init() == -1) return false;

@@ -89,4 +89,16 @@ namespace LuaFunctions
 
     //Sets the direction for Animation for a Sprite object from the SpriteManager
     static int SpriteManager_SetDirection(lua_State *L);
+
+    //Enables Sprite Animation
+    static int SpriteManager_AnimationEnable(lua_State *L);
+
+    //Disables Sprite Animation
+    static int SpriteManager_AnimationDisable(lua_State *L);
+
+    //Checks FPS and delays if needed
+    static int FPS_Check(lua_State *L);
+
+    //Sets FPS
+    static int FPS_Set(lua_State *L);
 }
