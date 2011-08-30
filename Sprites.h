@@ -1,3 +1,6 @@
+#ifndef SPRITE_HEADER_FILE
+#define SPRITE_HEADER_FILE
+
 //CPP Headers
 #include <iostream>
 #include <stdio.h>
@@ -98,3 +101,6 @@ namespace SDL
 
     }
 }
+
+
+#endif

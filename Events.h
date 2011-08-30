@@ -1,3 +1,6 @@
+#ifndef EVENTS_HEADER_FILE
+#define EVENTS_HEADER_FILE
+
 //CPP Headers
 #include <iostream>
 #include <stdio.h>
@@ -26,3 +29,6 @@ namespace SDL
         string GetKey();
     }
 }
+
+
+#endif

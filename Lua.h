@@ -1,3 +1,6 @@
+#ifndef LUA_HEADER_FILE
+#define LUA_HEADER_FILE
+
 //CPP Headers
 #include <iostream>
 #include <stdio.h>
@@ -102,3 +105,5 @@ namespace LuaFunctions
     //Sets FPS
     static int FPS_Set(lua_State *L);
 }
+
+#endif

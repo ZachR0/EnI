@@ -1,3 +1,6 @@
+#ifndef CONFIG_HEADER_FILE
+#define CONFIG_HEADER_FILE
+
 #include <string.h>
 
 using namespace std;
@@ -10,3 +13,7 @@ extern string GAMELOC;
 
 //Graphics Lib
 extern string GRAPHICS_LIB;
+
+
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef RENDERING_HEADER_FILE
+#define RENDERING_HEADER_FILE
+
 //CPP Headers
 #include <iostream>
 #include <stdio.h>
@@ -30,3 +33,6 @@ namespace SDL
         SDL_Surface *GenerateText(string Text, SDL_Color ForegroundColor, TTF_Font *Font);
     }
 }
+
+
+#endif

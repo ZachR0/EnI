@@ -7,6 +7,7 @@
 #include "TTF.h"
 #include "Sprites.h"
 #include "FPS.h"
+#include "Object.h"
 
 //Lua Interpreter Namespace
 namespace LuaInterp

@@ -1,3 +1,6 @@
+#ifndef SURFACE_HEADER_FILE
+#define SURFACE_HEADER_FILE
+
 //CPP Headers
 #include <iostream>
 #include <stdio.h>
@@ -49,3 +52,6 @@ namespace SDL
 
     }
 }
+
+
+#endif

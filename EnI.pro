@@ -44,7 +44,8 @@ SOURCES += \
     Lua.cpp \
     Events.cpp \
     Sprites.cpp \
-    FPS.cpp
+    FPS.cpp \
+    Object.cpp
 
 OTHER_FILES += \
     SDLMain.m
@@ -60,4 +61,5 @@ HEADERS += \
     Events.h \
     Config.h \
     Sprites.h \
-    FPS.h
+    FPS.h \
+    Object.h
