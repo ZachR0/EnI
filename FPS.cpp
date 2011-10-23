@@ -10,7 +10,7 @@ namespace SDL
         Timer FPS_Timer;
 
         //Current FPS
-        int CURRENT_FPS = 0;
+        int CURRENT_FPS = 25; //Default FPS
 
         Timer::Timer()
         {
