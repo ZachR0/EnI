@@ -99,6 +99,12 @@ namespace LuaFunctions
     //Disables Sprite Animation
     static int SpriteManager_AnimationDisable(lua_State *L);
 
+    //Initalizes a new Object manager object
+    static int ObjectManager_Init(lua_State *L);
+
+    //Renders an object from the object manager
+    static int ObjectManager_Render(lua_State *L);
+
     //Checks FPS and delays if needed
     static int FPS_Check(lua_State *L);
 

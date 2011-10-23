@@ -43,6 +43,8 @@ namespace LuaInterp
             lua_register(Interpreter, "Sprite_SetDirection", LuaFunctions::SpriteManager_SetDirection);
             lua_register(Interpreter, "Sprite_AnimateEnable", LuaFunctions::SpriteManager_AnimationEnable);
             lua_register(Interpreter, "Sprite_AnimateDisable", LuaFunctions::SpriteManager_AnimationDisable);
+            lua_register(Interpreter, "Object", LuaFunctions::ObjectManager_Init);
+            lua_register(Interpreter, "Object_Render", LuaFunctions::ObjectManager_Render);
             lua_register(Interpreter, "FPS_Check", LuaFunctions::FPS_Check);
             lua_register(Interpreter, "FPS_Set", LuaFunctions::FPS_Set);
 
@@ -255,7 +257,7 @@ namespace LuaFunctions
                 //Add the full path onto the given parameter
                 ImageFile = GAMELOC;
                 ImageFile += "/" + ImageFiletmp;
-                cout << ImageFile << endl;
+                //cout << ImageFile << endl;
 
                 //Check paramter
                 if ((ImageFile != ""))
@@ -667,6 +669,81 @@ namespace LuaFunctions
         else if(GRAPHICS_LIB == "OpenGL")
         {
             cout << "[EnI]: OpenGL currently is not supported for the Lua Function Sprite_AnimateDisable()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Initalizes a new Object manager object
+    static int ObjectManager_Init(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get parameters
+            int SpriteManager_Index = lua_tonumber(LuaInterp::Interpreter, 1);
+            int x = lua_tonumber(LuaInterp::Interpreter, 2);
+            int y = lua_tonumber(LuaInterp::Interpreter, 3);
+            int speed = lua_tonumber(LuaInterp::Interpreter, 4);
+            int collision = lua_tonumber(LuaInterp::Interpreter, 5);
+
+            //Init our Object
+            SDL::ObjectManager::Object tmpObject = SDL::ObjectManager::Object(&SDL::SpriteManager::Current_Sprites.at(SpriteManager_Index), x, y, speed, collision);
+
+            //Resize our dynamic array (vector)
+            SDL::ObjectManager::Current_Objects.resize(SDL::ObjectManager::Current_Objects.size() + 1); //Buffer an extra element
+
+            //Set Index that this Object Manager obj is located at in Current_Objects array
+            tmpObject.SetIndex(SDL::ObjectManager::Current_Objects_Index);
+
+            //Load our obj
+            SDL::ObjectManager::Current_Objects.at(SDL::ObjectManager::Current_Objects_Index) = tmpObject;
+
+            //Increase Index
+            SDL::ObjectManager::Current_Objects_Index++;
+
+            //Get the Object index
+            int index = tmpObject.GetIndex();
+
+            //Return the index
+            lua_pushnumber(L, index);
+
+            return 1;
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Renders an object from the object manager
+    static int ObjectManager_Render(lua_State *L)
+    {
+        //SDL
+        if (GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Call Render function
+            try
+            {
+                SDL::ObjectManager::Current_Objects.at(index).Render();
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_Render function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_Render()" << endl;
         }
 
         return 0;

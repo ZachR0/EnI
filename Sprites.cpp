@@ -78,34 +78,34 @@ namespace SDL
                         string Direction = LineData.substr(0, Sep_Loc);
                         LineData = LineData.substr(Sep_Loc+1); //Remove old data
 
-                        cout << "[SpriteManager]: Direction in SpriteMap:" << Direction << endl;
+                        //cout << "[SpriteManager]: Direction in SpriteMap:" << Direction << endl;
 
                         //Get the OffsetX
                         Sep_Loc = LineData.find(';');
                         string OffX = LineData.substr(0, Sep_Loc);
                         LineData = LineData.substr(Sep_Loc+1); //Remove old data
 
-                        cout << "[SpriteManager]: OffX in SpriteMap:" << OffX << endl;
+                        //cout << "[SpriteManager]: OffX in SpriteMap:" << OffX << endl;
 
                         //Get the OffsetY
                         Sep_Loc = LineData.find(';');
                         string OffY = LineData.substr(0, Sep_Loc);
                         LineData = LineData.substr(Sep_Loc+1); //Remove old data
 
-                        cout << "[SpriteManager]: OffY in SpriteMap:" << OffY << endl;
+                        //cout << "[SpriteManager]: OffY in SpriteMap:" << OffY << endl;
 
                         //Get the Width
                         Sep_Loc = LineData.find(';');
                         string Width = LineData.substr(0, Sep_Loc);
                         LineData = LineData.substr(Sep_Loc+1); //Remove old data
 
-                        cout << "[SpriteManager]: Width in SpriteMap:" << Width << endl;
+                        //cout << "[SpriteManager]: Width in SpriteMap:" << Width << endl;
 
                         //Get the Height
                         Sep_Loc = LineData.find(';');
                         string Height = LineData.substr(0, Sep_Loc);
 
-                        cout << "[SpriteManager]: Height in SpriteMap:" << Height << endl;
+                        //cout << "[SpriteManager]: Height in SpriteMap:" << Height << endl;
 
                         //Animation Frame Assignment
                         if (Direction == "DOWN")
@@ -188,10 +188,10 @@ namespace SDL
 
 
                 //Output Framing Assignments
-                cout << "DOWN: Min " << Min_Frame_Down << " ; Max " << Max_Frame_Down << " ; Total Frames " << (Max_Frame_Down - Min_Frame_Down) << endl;
-                cout << "UP: Min " << Min_Frame_Up << " ; Max " << Max_Frame_Up << " ; Total Frames " << (Max_Frame_Up - Min_Frame_Up) << endl;
-                cout << "RIGHT: Min " << Min_Frame_Right << " ; Max " << Max_Frame_Right << " ; Total Frames " << (Max_Frame_Right - Min_Frame_Right) << endl;
-                cout << "LEFT: Min " << Min_Frame_Left << " ; Max " << Max_Frame_Left << " ; Total Frames " << (Max_Frame_Left - Min_Frame_Left) << endl;
+                //cout << "DOWN: Min " << Min_Frame_Down << " ; Max " << Max_Frame_Down << " ; Total Frames " << (Max_Frame_Down - Min_Frame_Down) << endl;
+                //cout << "UP: Min " << Min_Frame_Up << " ; Max " << Max_Frame_Up << " ; Total Frames " << (Max_Frame_Up - Min_Frame_Up) << endl;
+                //cout << "RIGHT: Min " << Min_Frame_Right << " ; Max " << Max_Frame_Right << " ; Total Frames " << (Max_Frame_Right - Min_Frame_Right) << endl;
+                //cout << "LEFT: Min " << Min_Frame_Left << " ; Max " << Max_Frame_Left << " ; Total Frames " << (Max_Frame_Left - Min_Frame_Left) << endl;
 
                 //Get Directional Frame Totals
                 int Total_Frames_Down = (Max_Frame_Down - Min_Frame_Down) + 1;
@@ -241,7 +241,7 @@ namespace SDL
               else
               {
                   //Issue opening file
-                  cout << "[SpriteManager]: Are you sure the sprite map \"" << FileLoc << "\" exists?" << endl;
+                  //cout << "[SpriteManager]: Are you sure the sprite map \"" << FileLoc << "\" exists?" << endl;
               }
         }
 
