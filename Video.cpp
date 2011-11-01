@@ -18,7 +18,7 @@ namespace SDL
         if (Screen == NULL) return false;
 
         //Initialize FPS System
-        SDL::FPS::Init(20);
+        SDL::FPS::Init(25);
 
         //Initialize SDL_ttf
         if(TTF_Init() == -1) return false;

@@ -42,13 +42,7 @@ namespace SDL
             //Check if we should animate
             if(this->isAnimating())
             {
-                //Enable Animation
-                this->Sprite->SetAnimate(true);
-            }
-            else
-            {
-                //Disable Animation
-                this->Sprite->SetAnimate(false);
+                this->Sprite->Animate();
             }
         }
 
@@ -59,7 +53,7 @@ namespace SDL
             this->Sprite->SetDirection(UP_DIRECTION);
 
             //Adjust cords accordingly
-            this->setX(this->getY() - this->getMoveSpeed());
+            this->setY(this->getY() - this->getMoveSpeed());
         }
 
         void Object::MoveDown()
@@ -68,7 +62,7 @@ namespace SDL
             this->Sprite->SetDirection(DOWN_DIRECTION);
 
             //Adjust cords accordingly
-            this->setX(this->getY() + this->getMoveSpeed());
+            this->setY(this->getY() + this->getMoveSpeed());
         }
 
         void Object::MoveRight()
@@ -141,6 +135,9 @@ namespace SDL
         //Sets Animation status
         void Object::setAnimating(bool status)
         {
+            //Set Animation
+            this->Sprite->SetAnimate(status);
+
             this->Animate = status;
         }
 

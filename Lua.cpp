@@ -45,6 +45,22 @@ namespace LuaInterp
             lua_register(Interpreter, "Sprite_AnimateDisable", LuaFunctions::SpriteManager_AnimationDisable);
             lua_register(Interpreter, "Object", LuaFunctions::ObjectManager_Init);
             lua_register(Interpreter, "Object_Render", LuaFunctions::ObjectManager_Render);
+            lua_register(Interpreter, "Object_Animate", LuaFunctions::ObjectManager_Animate);
+            lua_register(Interpreter, "Object_MoveUp", LuaFunctions::ObjectManager_MoveUp);
+            lua_register(Interpreter, "Object_MoveDown", LuaFunctions::ObjectManager_MoveDown);
+            lua_register(Interpreter, "Object_MoveRight", LuaFunctions::ObjectManager_MoveRight);
+            lua_register(Interpreter, "Object_MoveLeft", LuaFunctions::ObjectManager_MoveLeft);
+            lua_register(Interpreter, "Object_GetX", LuaFunctions::ObjectManager_GetX);
+            lua_register(Interpreter, "Object_SetX", LuaFunctions::ObjectManager_SetX);
+            lua_register(Interpreter, "Object_GetY", LuaFunctions::ObjectManager_GetY);
+            lua_register(Interpreter, "Object_SetY", LuaFunctions::ObjectManager_SetY);
+            lua_register(Interpreter, "Object_SetCords", LuaFunctions::ObjectManager_SetCords);
+            lua_register(Interpreter, "Object_GetSpeed", LuaFunctions::ObjectManager_GetMoveSpeed);
+            lua_register(Interpreter, "Object_SetSpeed", LuaFunctions::ObjectManager_SetMoveSpeed);
+            lua_register(Interpreter, "Object_GetAnimStatus", LuaFunctions::ObjectManager_GetAnimStatus);
+            lua_register(Interpreter, "Object_SetAnimStatus", LuaFunctions::ObjectManager_SetAnimStatus);
+            lua_register(Interpreter, "Object_GetCollisionStatus", LuaFunctions::ObjectManager_GetCollisionStatus);
+            lua_register(Interpreter, "Object_SetCollisionStatus", LuaFunctions::ObjectManager_SetCollisionStatus);
             lua_register(Interpreter, "FPS_Check", LuaFunctions::FPS_Check);
             lua_register(Interpreter, "FPS_Set", LuaFunctions::FPS_Set);
 
@@ -744,6 +760,577 @@ namespace LuaFunctions
         else if(GRAPHICS_LIB == "OpenGL")
         {
             cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_Render()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Animates an object from the object manager
+    static int ObjectManager_Animate(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Call the Animation function
+            try
+            {
+                SDL::ObjectManager::Current_Objects.at(index).Animation();
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_Animate function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_Animate()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Object Movement - Up Direction
+    static int ObjectManager_MoveUp(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Simply call the MoveUP Function
+            try
+            {
+                SDL::ObjectManager::Current_Objects.at(index).MoveUp();
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_MoveUp function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_MoveUp()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Object Movement - Down Direction
+    static int ObjectManager_MoveDown(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Simply call the MoveDown Function
+            try
+            {
+                SDL::ObjectManager::Current_Objects.at(index).MoveDown();
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_MoveDown function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_MoveDown()" << endl;
+        }
+
+
+        return 0;
+    }
+
+    //Object Movement - Right Direction
+    static int ObjectManager_MoveRight(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Simply call the MoveRight Function
+            try
+            {
+                SDL::ObjectManager::Current_Objects.at(index).MoveRight();
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_MoveRight function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_MoveRight()" << endl;
+        }
+
+
+        return 0;
+    }
+
+    //Object Movement - Left Direction
+    static int ObjectManager_MoveLeft(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Simply call the MoveLeft Function
+            try
+            {
+                SDL::ObjectManager::Current_Objects.at(index).MoveLeft();
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_MoveLeft function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_MoveLeft()" << endl;
+        }
+
+
+        return 0;
+    }
+
+    //Get the x cord from an object in the Object Manager
+    static int ObjectManager_GetX(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            try
+            {
+                //Get the Obj X
+                int x = SDL::ObjectManager::Current_Objects.at(index).getX();
+
+                //Return the data
+                lua_pushnumber(L, x);
+
+                return 1;
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_GetX function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_GetX()" << endl;
+        }
+
+
+        return 0;
+    }
+
+    //Sets the x cord of an object in the Object Manager
+    static int ObjectManager_SetX(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Get other parameters
+            int x = lua_tonumber(LuaInterp::Interpreter, 2);
+
+            try
+            {
+                //Set the Obj X
+                SDL::ObjectManager::Current_Objects.at(index).setX(x);
+
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_SetX function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_SetX()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Get the y cord from an object in the Object Manager
+    static int ObjectManager_GetY(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            try
+            {
+                //Get the Obj Y
+                int y = SDL::ObjectManager::Current_Objects.at(index).getY();
+
+                //Return the data
+                lua_pushnumber(L, y);
+
+                return 1;
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_GetY function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_GetY()" << endl;
+        }
+
+
+        return 0;
+    }
+
+    //Sets the Y cord of an object in the Object Manager
+    static int ObjectManager_SetY(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Get other parameters
+            int y = lua_tonumber(LuaInterp::Interpreter, 2);
+
+            try
+            {
+                //Set the Obj Y
+                SDL::ObjectManager::Current_Objects.at(index).setY(y);
+
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_SetY function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_SetY()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Sets the X,Y cords of an object in the Object Manager
+    static int ObjectManager_SetCords(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Get other parameters
+            int x = lua_tonumber(LuaInterp::Interpreter, 2);
+            int y = lua_tonumber(LuaInterp::Interpreter, 3);
+
+            try
+            {
+                //Set the Obj X
+                SDL::ObjectManager::Current_Objects.at(index).setX(x);
+
+                //Set the Obj Y
+                SDL::ObjectManager::Current_Objects.at(index).setY(y);
+
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_SetCords function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_SetCords()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Gets the move speed of an object in the Object Manager
+    static int ObjectManager_GetMoveSpeed(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            try
+            {
+                //Get the Obj Speed
+                int speed = SDL::ObjectManager::Current_Objects.at(index).getMoveSpeed();
+
+                //Return the data
+                lua_pushnumber(L, speed);
+
+                return 1;
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_GetMoveSpeed function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_GetMoveSpeed()" << endl;
+        }
+
+
+        return 0;
+    }
+
+    //Sets the move speed of an object in the Object Manager
+    static int ObjectManager_SetMoveSpeed(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Get other parameters
+            int speed = lua_tonumber(LuaInterp::Interpreter, 2);
+
+            try
+            {
+                //Set the Obj Speed
+                SDL::ObjectManager::Current_Objects.at(index).setMoveSpeed(speed);
+
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_SetMoveSpeed function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_SetMoveSpeed()" << endl;
+        }
+
+        return 0;
+
+    }
+
+    //Gets the animation status of an object in the Object Manager
+    static int ObjectManager_GetAnimStatus(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            try
+            {
+                //Get the Obj Animation Status
+                bool status = SDL::ObjectManager::Current_Objects.at(index).isAnimating();
+
+                //Set return val
+                int val = 0;
+                switch(status)
+                {
+                case true:
+                    val = 1;
+                    break;
+                case false:
+                    val = 0;
+                    break;
+                default:
+                    val = -1;
+                    break;
+                };
+
+                //Return the data
+                lua_pushnumber(L, val);
+
+                return 1;
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_GetAnimStatus function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_GetAnimStatus()" << endl;
+        }
+
+
+        return 0;
+    }
+
+    //Sets the animation status of an object in the Object Manager
+    static int ObjectManager_SetAnimStatus(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Get other parameters
+            int status = lua_tonumber(LuaInterp::Interpreter, 2);
+
+            try
+            {
+                //Set the Obj Animation Status
+                bool newStatus = false;
+                if(status == 1) newStatus = true;
+                if(status == 0) newStatus = false;
+                SDL::ObjectManager::Current_Objects.at(index).setAnimating(newStatus);
+
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_SetAnimStatus function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_SetAnimStatus()" << endl;
+        }
+
+        return 0;
+    }
+
+    //Gets the collision status(enabled/disabled) of an Object in the Object Manager
+    static int ObjectManager_GetCollisionStatus(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            try
+            {
+                //Get the Obj Collision Status
+                bool status = SDL::ObjectManager::Current_Objects.at(index).isCollisionEnabled();
+
+                //Set return val
+                int val = 0;
+                switch(status)
+                {
+                case true:
+                    val = 1;
+                    break;
+                case false:
+                    val = 0;
+                    break;
+                default:
+                    val = -1;
+                    break;
+                };
+
+                //Return the data
+                lua_pushnumber(L, val);
+
+                return 1;
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_GetCollisionStatus function for obj " << index << endl;
+            }
+
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_GetCollisionStatus()" << endl;
+        }
+
+
+        return 0;
+    }
+
+    //Sets  the collision status(enable/disable) of an Object in the Object Manager
+    static int ObjectManager_SetCollisionStatus(lua_State *L)
+    {
+        //SDL
+        if(GRAPHICS_LIB == "SDL")
+        {
+            //Get Object ID
+            int index = lua_tonumber(LuaInterp::Interpreter, 1);
+
+            //Get other parameters
+            int status = lua_tonumber(LuaInterp::Interpreter, 2);
+
+            try
+            {
+                //Set the Obj Collision Status
+                bool newStatus = false;
+                if(status == 1) newStatus = true;
+                if(status == 0) newStatus = false;
+                SDL::ObjectManager::Current_Objects.at(index).setCollision(newStatus);
+
+            }
+            catch(...)
+            {
+                cout << "[Lua]: There was a problem accessing the Object_SetCollisionStatus function for obj " << index << endl;
+            }
+        }
+
+        //OpenGL
+        else if(GRAPHICS_LIB == "OpenGL")
+        {
+            cout << "[EnI]: OpenGL currently is not supported for the Lua Function Object_SetCollisionStatus()" << endl;
         }
 
         return 0;

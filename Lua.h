@@ -105,6 +105,54 @@ namespace LuaFunctions
     //Renders an object from the object manager
     static int ObjectManager_Render(lua_State *L);
 
+    //Animates an object from the object manager
+    static int ObjectManager_Animate(lua_State *L);
+
+    //Object Movement - Up Direction
+    static int ObjectManager_MoveUp(lua_State *L);
+
+    //Object Movement - Down Direction
+    static int ObjectManager_MoveDown(lua_State *L);
+
+    //Object Movement - Right Direction
+    static int ObjectManager_MoveRight(lua_State *L);
+
+    //Object Movement - Left Direction
+    static int ObjectManager_MoveLeft(lua_State *L);
+
+    //Get the x cord from an object in the Object Manager
+    static int ObjectManager_GetX(lua_State *L);
+
+    //Sets the x cord of an object in the Object Manager
+    static int ObjectManager_SetX(lua_State *L);
+
+    //Get the y cord from an object in the Object Manager
+    static int ObjectManager_GetY(lua_State *L);
+
+    //Sets the Y cord of an object in the Object Manager
+    static int ObjectManager_SetY(lua_State *L);
+
+    //Sets the X,Y cords of an object in the Object Manager
+    static int ObjectManager_SetCords(lua_State *L);
+
+    //Gets the move speed of an object in the Object Manager
+    static int ObjectManager_GetMoveSpeed(lua_State *L);
+
+    //Sets the move speed of an object in the Object Manager
+    static int ObjectManager_SetMoveSpeed(lua_State *L);
+
+    //Gets the animation status of an object in the Object Manager
+    static int ObjectManager_GetAnimStatus(lua_State *L);
+
+    //Sets the animation status of an object in the Object Manager
+    static int ObjectManager_SetAnimStatus(lua_State *L);
+
+    //Gets the collision status(enabled/disabled) of an Object in the Object Manager
+    static int ObjectManager_GetCollisionStatus(lua_State *L);
+
+    //Sets  the collision status(enable/disable) of an Object in the Object Manager
+    static int ObjectManager_SetCollisionStatus(lua_State *L);
+
     //Checks FPS and delays if needed
     static int FPS_Check(lua_State *L);
 
